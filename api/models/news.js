@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-const newsPortalSchema = new Schema({
+const newsPortalSchema = mongoose.Schema({
   newsId: { type: String, required: true },
   newsHeadline: {
     type: String,
@@ -27,4 +26,4 @@ const newsPortalSchema = new Schema({
 
 newsPortalSchema.set("timestamps", true);
 
-module.exports = mongoose.model("Newsroom", newsPortalSchema);
+module.exports = mongoose.model("News", newsPortalSchema);
