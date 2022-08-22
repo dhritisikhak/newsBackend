@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const newsPortalRoutes = require("./api/routes/newsPortal");
-const studentRoute = require("./api/routes/student");
 
 mongoose.Promise = global.Promise;
 mongoose
@@ -42,11 +41,8 @@ app.use((req, res, next) => {
   next();
 });
 
-
 //Routes which should handle requests
 app.use("/newsPortal", newsPortalRoutes);
-app.use("/student", studentRoute);
-
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
