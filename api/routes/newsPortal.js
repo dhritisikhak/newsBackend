@@ -34,27 +34,17 @@ router.get("/", (req, res, next) => {
     });
 });
 
-// router.post("/create-news", (req, res, next) => {
-//   newsPortalSchema.create(req.body, (error, data) => {
-//     if (error) {
-//       return next(error);
-//     } else {
-//       console.log(data);
-//       res.json(data);
-//     }
-//   });
-// });
-
-router.post("/create-news", (req, res, next) => {
-  const newsData1 = new newsPortalSchema({
+router.post("/create-news", upload.single("newsImage"), (req, res, next) => {
+  console.log(req.file);
+  const newsData = new newsPortalSchema({
     newsId: req.body.newsId,
     newsHeadline: req.body.newsHeadline,
     newsAuthor: req.body.newsAuthor,
-    // newsCategory: req.body.newsCategory,
-    // newsContent: req.body.newsContent,
-    // newsImage: req.file.path,
+    newsCategory: req.body.newsCategory,
+    newsContent: req.body.newsContent,
+    newsImage: req.file.path,
   });
-  newsData1
+  newsData
     .save()
     .then((result) => {
       console.log(result);
@@ -64,6 +54,9 @@ router.post("/create-news", (req, res, next) => {
           newsId: result.newsId,
           newsHeadline: result.newsHeadline,
           newsAuthor: result.newsAuthor,
+          newsCategory: result.newsCategory,
+          newsContent: result.newsContent,
+          newsImage: result.newsImage,
         },
       });
     })
@@ -72,38 +65,6 @@ router.post("/create-news", (req, res, next) => {
       res.status(500).json({ error: err });
     });
 });
-
-// router.post("/", upload.single("newsImage"), (req, res, next) => {
-//   console.log(req.file);
-//   const newsData = new NewsPortal({
-//     newsId: req.body.newsId,
-//     newsHeadline: req.body.newsHeadline,
-//     newsAuthor: req.body.newsAuthor,
-//     newsCategory: req.body.newsCategory,
-//     newsContent: req.body.newsContent,
-//     newsImage: req.file.path,
-//   });
-//   newsData
-//     .save()
-//     .then((result) => {
-//       console.log(result);
-//       res.status(200).json({
-//         message: "Created successfully!",
-//         createdNews: {
-//           newsId: result.newsId,
-//           newsHeadline: result.newsHeadline,
-//           newsAuthor: result.newsAuthor,
-//           newsCategory: result.newsCategory,
-//           newsContent: result.newsContent,
-//           newsImage: result.newsImage,
-//         },
-//       });
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       res.status(500).json({ error: err });
-//     });
-// });
 
 router.get("/:newsID", (req, res, next) => {
   const id = req.params.newsID;
