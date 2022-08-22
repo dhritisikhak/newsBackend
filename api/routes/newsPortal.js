@@ -46,7 +46,7 @@ router.get("/", (req, res, next) => {
 // });
 
 router.post("/create-news", (req, res, next) => {
-  const newsData = new newsPortalSchema({
+  const newsData1 = new newsPortalSchema({
     newsId: req.body.newsId,
     newsHeadline: req.body.newsHeadline,
     newsAuthor: req.body.newsAuthor,
@@ -54,7 +54,7 @@ router.post("/create-news", (req, res, next) => {
     // newsContent: req.body.newsContent,
     // newsImage: req.file.path,
   });
-  newsData
+  newsData1
     .save()
     .then((result) => {
       console.log(result);
