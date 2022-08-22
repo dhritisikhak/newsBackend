@@ -14,11 +14,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const newsPortalSchema = require("../models/news");
+const NewsPortal = require("../models/news");
 
 router.get("/", (req, res, next) => {
-  newsPortalSchema
-    .find()
+  NewsPortal.find()
     // .select("newsHeadline newsCategory newsContent newsImage newsAuthor newsId")
     .exec()
     .then((doc) => {
@@ -36,10 +35,10 @@ router.get("/", (req, res, next) => {
 
 router.post("/create-news", upload.single("newsImage"), (req, res, next) => {
   console.log(req.file);
-  const newsData = new newsPortalSchema({
+  const newsData = new NewsPortal({
     newsId: req.body.newsId,
     newsHeadline: req.body.newsHeadline,
-    newsAuthor: req.body.newsAuthor,
+    newsAuthor: req.body.newsAuthor, 
     newsCategory: req.body.newsCategory,
     newsContent: req.body.newsContent,
     newsImage: req.file.path,
@@ -68,8 +67,7 @@ router.post("/create-news", upload.single("newsImage"), (req, res, next) => {
 
 router.get("/:newsID", (req, res, next) => {
   const id = req.params.newsID;
-  newsPortalSchema
-    .findById(id)
+  NewsPortal.findById(id)
     .exec()
     .then((doc) => {
       console.log("From database", doc);
@@ -91,13 +89,12 @@ router.patch("/:newsID", (req, res, next) => {
   for (const ops of req.body) {
     updateOps[ops.propName] = ops.value;
   }
-  newsPortalSchema
-    .updateOne(
-      { newsId: id },
-      { $set: updateOps }
-      // { $set: { name: req.body.newName, price: req.body.newPrice } }
-      //
-    )
+  NewsPortal.updateOne(
+    { newsId: id },
+    { $set: updateOps }
+    // { $set: { name: req.body.newName, price: req.body.newPrice } }
+    // 
+  )
     .exec()
     .then((result) => {
       res.status(200).json(result);
