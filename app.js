@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require('dotenv').config();
+
 
 const newsPortalRoutes = require("./api/routes/newsPortal");
 const subscribeUserRoute = require("./api/routes/subscribeRoute");
