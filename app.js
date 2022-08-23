@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const newsPortalRoutes = require("./api/routes/newsPortal");
-const emailSubscribeRoutes = require("./api/routes/emailSubscribe");
+const subscribeUserRoute = require("./api/routes/subscribeRoute");
 
 mongoose.Promise = global.Promise;
 mongoose
@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 
 //Routes which should handle requests
 app.use("/newsPortal", newsPortalRoutes);
-app.use("/subscribe", emailSubscribeRoutes);
+app.use("/userSubscribe", subscribeUserRoute);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
