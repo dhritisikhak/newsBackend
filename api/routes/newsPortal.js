@@ -70,8 +70,8 @@ router.post("/create-news", upload.single("newsImage"), (req, res, next) => {
     });
 });
 
-router.get("/:newsID", (req, res, next) => {
-  const id = req.params.newsID;
+router.get("/:newsId", (req, res, next) => {
+  const id = req.params.newsId;
   NewsPortal.findById(id)
     .exec()
     .then((doc) => {
@@ -88,8 +88,8 @@ router.get("/:newsID", (req, res, next) => {
     });
 });
 
-router.patch("/:newsID", (req, res, next) => {
-  const id = req.params.newsID;
+router.patch("/:newsId", (req, res, next) => {
+  const id = req.params.newsId;
   const updateOps = {};
   for (const ops of req.body) {
     updateOps[ops.propName] = ops.value;
@@ -110,8 +110,8 @@ router.patch("/:newsID", (req, res, next) => {
     });
 });
 
-router.delete("/:newsID", (req, res, next) => {
-  const id = req.params.newsID;
+router.delete("/:newsId", (req, res, next) => {
+  const id = req.params.newsId;
   NewsPortal.remove({ newsId: id })
     .exec()
     .then((result) => {
