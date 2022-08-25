@@ -2,11 +2,9 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const multer = require("multer");
-require('dotenv').config();
+require("dotenv").config();
 
-
-const { storage } = require('../../storage/storage');
-
+const { storage } = require("../../storage/storage");
 
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
@@ -43,7 +41,7 @@ router.post("/create-news", upload.single("newsImage"), (req, res, next) => {
   const newsData = new NewsPortal({
     newsId: req.body.newsId,
     newsHeadline: req.body.newsHeadline,
-    newsAuthor: req.body.newsAuthor, 
+    newsAuthor: req.body.newsAuthor,
     newsCategory: req.body.newsCategory,
     newsContent: req.body.newsContent,
     newsImage: req.file.path,
@@ -94,12 +92,7 @@ router.patch("/:newsId", (req, res, next) => {
   for (const ops of req.body) {
     updateOps[ops.propName] = ops.value;
   }
-  NewsPortal.updateOne(
-    { newsId: id },
-    { $set: updateOps }
-    // { $set: { name: req.body.newName, price: req.body.newPrice } }
-    // 
-  )
+  NewsPortal.updateOne({ newsId: id }, { $set: updateOps })
     .exec()
     .then((result) => {
       res.status(200).json(result);
@@ -112,7 +105,7 @@ router.patch("/:newsId", (req, res, next) => {
 
 router.delete("/:newsId", (req, res, next) => {
   const id = req.params.newsId;
-  NewsPortal.remove({ newsId: id })
+  NewsPortal.remove({ _id: id })
     .exec()
     .then((result) => {
       res.status(200).json(result);
